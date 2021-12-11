@@ -10,9 +10,9 @@ int CharToInt(char c)
     {
         return c-64;
     }
-    if(c>=91 && c<=122)
+    else if(c>=97 && c<=122)
     {
-        return c-90;
+        return c-96;
     }
     else
         return 0;
@@ -24,30 +24,38 @@ char* Gematria(char* word, char* text)
     char* temp;
     char* final = (char*)malloc(sizeof(char));
     if(final==NULL) exit(0);
-    *final='\0';
     
     // get gematria value of word
     int wordSum = 0;
     for (temp = word; *temp!='\0'; temp++)
     {
-        wordSum+= *temp;
+        wordSum+= CharToInt(*temp);
     }
     
     // find all substrings that has the same gematria value
     int tempSum=0;
-    char* sameValue = (char*)(malloc(sizeof(text)));
+    char* sameValue;
+    sameValue = (char*)(malloc(sizeof(text)));
     if(sameValue==NULL) exit(0);
     
     int j=0;
     for (temp = text; *temp!='\0'; temp++)
     {
+        // add substring to final
         if(tempSum == wordSum)
         {
-            // add substring t final
-            strcat(final,sameValue);
-            strcat(final,(char*)'~');
+             // get rid of unnecessary char
+             int count = 0;
+             while (CharToInt(sameValue[0])==0)
+             {
+                sameValue++;
+                count++;
+             }
+                final = strcat(final,strcat(sameValue,"~"));
+                temp = temp-j+count;
+        
             // reset pointer
-            sameValue = realloc(sameValue,sizeof(temp));
+            sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
             tempSum=0;
             j=0;
         }
@@ -57,16 +65,35 @@ char* Gematria(char* word, char* text)
             sameValue[j] = *temp;
             tempSum+=CharToInt(sameValue[j]);
             j++;
+            
         }
         else
         {
             // reset pointer
-            sameValue = realloc(sameValue,sizeof(temp));
+            sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+            temp = temp-j;
             tempSum=0;
             j=0;
         }
     }
+    // incase loop missed last char
+    if(tempSum == wordSum)
+        {
+             // get rid of unnecessary char
+             int count = 0;
+             while (CharToInt(sameValue[0])==0)
+             {
+                sameValue++;
+                count++;
+             }
+                final = strcat(final,strcat(sameValue,"~"));
+                temp = temp-j+count;
+        
+            // reset pointer
+            sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+            tempSum=0;
+            j=0;
+        }
     free(sameValue);
-    free(temp);
     return final;
 }
