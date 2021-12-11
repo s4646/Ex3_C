@@ -78,22 +78,21 @@ char* Gematria(char* word, char* text)
     }
     // incase loop missed last char
     if(tempSum == wordSum)
+    {
+        // get rid of unnecessary char
+        int count = 0;
+        while (CharToInt(sameValue[0])==0)
         {
-             // get rid of unnecessary char
-             int count = 0;
-             while (CharToInt(sameValue[0])==0)
-             {
-                sameValue++;
-                count++;
-             }
-                final = strcat(final,strcat(sameValue,"~"));
-                temp = temp-j+count;
-        
-            // reset pointer
-            sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
-            tempSum=0;
-            j=0;
+            sameValue++;
+            count++;
         }
+        final = strcat(final,strcat(sameValue,"~"));
+        temp = temp-j+count;
+        // reset pointer
+        sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+        tempSum=0;
+        j=0;
+    }
     free(sameValue);
     return final;
 }
