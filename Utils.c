@@ -32,6 +32,56 @@ int CharToAtbash(char c)
         return c;
 }
 
+int IsAnagram(char array1[], char array2[])
+
+{
+    int num1[27] = {0}, num2[27] = {0}, i = 0;
+
+    while (array1[i] != '\0')
+    {
+        // if not space
+        if(array1[i]!=' ')
+        {
+            // if not letter
+            if((array1[i]<'a' || array1[i]>'z') && (array1[i]<'A' || array1[i]>'Z'))
+            {
+                num1[27]+=array1[i];
+            }
+            else
+            {
+                num1[array1[i] - 'a']++;
+            }
+        }
+        i++;
+    }
+
+    i = 0;
+    while (array2[i] != '\0')
+    {
+        // if not space
+        if(array2[i]!=' ')
+        {
+            // if not letter
+            if((array2[i]<'a' || array2[i]>'z') && (array2[i]<'A' || array2[i]>'Z'))
+            {
+                num2[27]+=array2[i];
+            }
+            else
+            {
+                num2[array2[i] - 'a']++;
+            }
+        }
+        i++;
+    }
+
+    for (i = 0; i < 27; i++)
+    {
+        if (num1[i] != num2[i])
+            return 0;
+    }
+    return 1;
+}
+
 char* Gematria(char* word, char* text)
 {
     // initiazlie
@@ -221,4 +271,36 @@ char* Atbash(char* word, char* text, int wordSize)
     free(temp);
     free(final);
     return ret;
+}
+
+char* Anagram(char* word, char* text, int wordSize, int textSize)
+{
+    char* potential = Gematria(word,text);
+    char* final = (char*)calloc(1,sizeof(char));
+    int numOfWords = 0;
+    // get number of potential anagrams
+    for (char* temp = potential; *temp!='\0'; temp++)
+    {
+        if(*temp=='~')
+            numOfWords++;
+    }
+    // for each candidate, if anagram - add to final
+    char* temp = potential;
+    char* other;
+    for (size_t i = 0; i < numOfWords; i++)
+    {
+        other = calloc(textSize,sizeof(char));
+        int j = 0;
+        for (; *temp!='~'; temp++)
+        {
+            other[j++] = *temp;
+        }
+        if(IsAnagram(other,word))
+        {
+            final = strcat(final,strcat(other,"~"));
+        }
+        temp++;
+    }
+    free(other);
+    return final;
 }
