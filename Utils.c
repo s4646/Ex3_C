@@ -303,9 +303,9 @@ char* Atbash(char* word, char* text, int wordSize)
     return ret;
 }
 
-char* Anagram(char* word, char* text, int wordSize, int textSize)
+char* Anagram(char* word, char* text, int wordSize, int textSize, char* gem)
 {
-    char* potential = Gematria(word,text);
+    char* potential = gem;
     char* final = (char*)calloc(1,sizeof(char));
     if(final==NULL) exit(0);
     int numOfWords = 0;
@@ -333,7 +333,7 @@ char* Anagram(char* word, char* text, int wordSize, int textSize)
         }
         temp++;
     }
-    free(potential);
+    //free(potential);
     free(other);
     return final;
 }

@@ -11,7 +11,7 @@ int CharToAtbash(char c);
 int IsAnagram(char array1[], char array2[]);
 char* Gematria(char* word, char* text);
 char* Atbash(char* word, char* text, int wordSize);
-char* Anagram(char* word, char* text, int wordSize, int textSize);
+char* Anagram(char* word, char* text, int wordSize, int textSize, char* gem);
 
 int main() 
 {
@@ -75,7 +75,7 @@ int main()
     *(test2+NumOfElements(test2)-1)='\0'; // remove last '~'
     printf("Atbash Sequences: %s\n", test2);
 
-    char* test3 = Anagram(word, text, i, j);
+    char* test3 = Anagram(word, text, i, j, test1);
     *(test3+NumOfElements(test3)-1)='\0'; // remove last '~'
     printf("Anagram Sequences: %s\n", test3);
 
