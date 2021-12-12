@@ -6,16 +6,15 @@
 #define WORD 30
 
 int CharToInt(char c);
+int CharToAtbash(char c);
 char* Gematria(char* word, char* text);
+char* Atbash(char* word, char* text, int wordSize);
 
 int main() 
 {
-    char* word = (char*)malloc(sizeof(char)*WORD);
-    char* text = (char*)malloc(sizeof(char)*TXT);
-    if(word==NULL || text==NULL)
-    {
-        exit(0);
-    }
+    // get word and text
+    char tmpWord[WORD] = {'\0'};
+    char tmpText[TXT] = {'\0'};
     char c;
     int i=0;
     while(i<WORD)
@@ -27,7 +26,7 @@ int main()
         }
         else
         {
-            word[i] = c;
+            tmpWord[i] = c;
             i++;
         }
     }
@@ -41,26 +40,40 @@ int main()
         }
         else
         {
-            text[j] = c;
+            tmpText[j] = c;
             j++;
         }
     }
-
-    word = (char*)realloc(word,i);
-    text = (char*)realloc(text,j);
-    if(word==NULL || text==NULL)
+    // initialize pointers with EXACT size of word and text
+    char* word = (char*)malloc(i*sizeof(char));
+    char* text = (char*)malloc(j*sizeof(char));
+    if(word==NULL || text==NULL) exit(0);
+    for (size_t i = 0; i < WORD; i++)
     {
-        exit(0);
+        if(tmpWord[i]=='\0')
+            break;
+        word[i]=tmpWord[i];
     }
+    for (size_t i = 0; i < TXT; i++)
+    {
+        if(tmpText[i]=='\0')
+            break;
+        text[i]=tmpText[i];
+    }
+    
     printf("%s\n", word);
     printf("%s\n\n", text);
     
-    char* test = Gematria(word,text);
-    printf("%s\n", test);
-    
+    char* test1 = Gematria(word,text);
+    printf("%s\n\n", test1);
+
+    char* test2 = Atbash(word,text,i);
+    printf("%s\n\n", test2);
+
     free(word);
     free(text);
-    free(test);
+    free(test1);
+    free(test2);
 
     return 0;
 }
