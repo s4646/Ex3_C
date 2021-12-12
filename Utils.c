@@ -4,6 +4,16 @@
 #define TXT 1024 
 #define WORD 30
 
+int NumOfElements(char* ptr)
+{
+    int j=0;
+    for (char* temp = ptr; *temp!='\0'; temp++)
+    {
+        j++;
+    }
+    return j;
+}
+
 int CharToInt(char c)
 {
     if(c>=65 && c<=90)

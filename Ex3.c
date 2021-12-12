@@ -5,6 +5,7 @@
 #define TXT 1024 
 #define WORD 30
 
+int NumOfElements(char* ptr);
 int CharToInt(char c);
 int CharToAtbash(char c);
 int IsAnagram(char array1[], char array2[]);
@@ -63,17 +64,20 @@ int main()
         text[i]=tmpText[i];
     }
     
-    printf("%s\n", word);
-    printf("%s\n\n", text);
+    //printf("%s\n", word);
+    //printf("%s\n\n", text);
     
     char* test1 = Gematria(word,text);
-    printf("%s\n\n", test1);
+    *(test1+NumOfElements(test1)-1)='\0'; // remove last '~'
+    printf("Gematria Sequences: %s\n", test1);
 
     char* test2 = Atbash(word,text,i);
-    printf("%s\n\n", test2);
+    *(test2+NumOfElements(test2)-1)='\0'; // remove last '~'
+    printf("Atbash Sequences: %s\n", test2);
 
     char* test3 = Anagram(word, text, i, j);
-    printf("%s\n\n", test3);
+    *(test3+NumOfElements(test3)-1)='\0'; // remove last '~'
+    printf("Anagram Sequences: %s\n", test3);
 
     free(word);
     free(text);

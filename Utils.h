@@ -1,6 +1,7 @@
 #ifndef UTILS_H_INCLUDED
 #define UTILS_H_INCLUDED
 
+int NumOfElements(char* ptr);
 int CharToInt(char c);
 int CharToAtbash(char c);
 int IsAnagram(char array1[], char array2[]);
