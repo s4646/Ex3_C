@@ -52,14 +52,20 @@ int IsAnagram(char array1[], char array2[])
         // if not space
         if(array1[i]!=' ')
         {
-            // if not letter
-            if((array1[i]<'a' || array1[i]>'z') && (array1[i]<'A' || array1[i]>'Z'))
-            {
-                num1[27]+=array1[i];
-            }
-            else
+            // if undercase
+            if((array1[i]>='a' && array1[i]<='z'))
             {
                 num1[array1[i] - 'a']++;
+            }
+            // if uppercase
+            else if(array1[i]>='A' && array1[i]<='Z')
+            {
+                num1[array1[i] - 'A']++;
+            }
+            // not a letter
+            else
+            {
+                num1[27]+=array1[i];
             }
         }
         i++;
@@ -71,14 +77,20 @@ int IsAnagram(char array1[], char array2[])
         // if not space
         if(array2[i]!=' ')
         {
-            // if not letter
-            if((array2[i]<'a' || array2[i]>'z') && (array2[i]<'A' || array2[i]>'Z'))
-            {
-                num2[27]+=array2[i];
-            }
-            else
+            // if undercase
+            if((array2[i]>='a' && array2[i]<='z'))
             {
                 num2[array2[i] - 'a']++;
+            }
+            // if uppercase
+            else if(array2[i]>='A' && array2[i]<='Z')
+            {
+                num2[array2[i] - 'A']++;
+            }
+            // not a letter
+            else
+            {
+                num2[27]+=array2[i];
             }
         }
         i++;
