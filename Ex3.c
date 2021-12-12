@@ -68,14 +68,17 @@ int main()
     //printf("%s\n\n", text);
     
     char* test1 = Gematria(word,text);
+    
+    char* test2 = Atbash(word,text,i);
+
+    char* test3 = Anagram(word, text, i, j, test1);
+
     *(test1+NumOfElements(test1)-1)='\0'; // remove last '~'
     printf("Gematria Sequences: %s\n", test1);
 
-    char* test2 = Atbash(word,text,i);
     *(test2+NumOfElements(test2)-1)='\0'; // remove last '~'
     printf("Atbash Sequences: %s\n", test2);
 
-    char* test3 = Anagram(word, text, i, j, test1);
     *(test3+NumOfElements(test3)-1)='\0'; // remove last '~'
     printf("Anagram Sequences: %s\n", test3);
 
