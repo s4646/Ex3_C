@@ -120,6 +120,7 @@ char* Gematria(char* word, char* text)
         
             // reset pointer
             sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+            if(sameValue==NULL) exit(0);
             tempSum=0;
             j=0;
         }
@@ -135,6 +136,7 @@ char* Gematria(char* word, char* text)
         {
             // reset pointer
             sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+            if(sameValue==NULL) exit(0);
             temp = temp-j;
             tempSum=0;
             j=0;
@@ -154,6 +156,7 @@ char* Gematria(char* word, char* text)
         temp = temp-j+count;
         // reset pointer
         sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+        if(sameValue==NULL) exit(0);
         tempSum=0;
         j=0;
     }
@@ -199,6 +202,7 @@ char* Atbash(char* word, char* text, int wordSize)
         
             // reset pointer
             sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+            if(sameValue==NULL) exit(0);
             tempSum=0;
             j=0;
         }
@@ -214,6 +218,7 @@ char* Atbash(char* word, char* text, int wordSize)
         {
             // reset pointer
             sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+            if(sameValue==NULL) exit(0);
             temp = temp-j;
             tempSum=0;
             j=0;
@@ -233,6 +238,7 @@ char* Atbash(char* word, char* text, int wordSize)
         temp = temp-j+count;
         // reset pointer
         sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+        if(sameValue==NULL) exit(0);
         tempSum=0;
         j=0;
     }
@@ -242,6 +248,7 @@ char* Atbash(char* word, char* text, int wordSize)
     j=0;
     char* ret = (char*)calloc(1,sizeof(char));
     temp = calloc(wordSize,sizeof(char));
+    if(ret==NULL || temp==NULL) exit(0);
     for (char* arr = final; *arr!='\0'; arr++)
     {
         int value = CharToAtbash(*arr);
@@ -255,6 +262,7 @@ char* Atbash(char* word, char* text, int wordSize)
             }
             // no match - reset pointer
             temp = calloc(wordSize,sizeof(char));
+            if(temp==NULL) exit(0);
             j=0;
         }
         // char's atbash value equals to word's char's gematric value
@@ -277,6 +285,7 @@ char* Anagram(char* word, char* text, int wordSize, int textSize)
 {
     char* potential = Gematria(word,text);
     char* final = (char*)calloc(1,sizeof(char));
+    if(final==NULL) exit(0);
     int numOfWords = 0;
     // get number of potential anagrams
     for (char* temp = potential; *temp!='\0'; temp++)
@@ -290,6 +299,7 @@ char* Anagram(char* word, char* text, int wordSize, int textSize)
     for (size_t i = 0; i < numOfWords; i++)
     {
         other = calloc(textSize,sizeof(char));
+        if(other==NULL) exit(0);
         int j = 0;
         for (; *temp!='~'; temp++)
         {
@@ -301,6 +311,7 @@ char* Anagram(char* word, char* text, int wordSize, int textSize)
         }
         temp++;
     }
+    free(potential);
     free(other);
     return final;
 }
