@@ -108,7 +108,7 @@ char* Gematria(char* word, char* text)
 {
     // initiazlie
     char* temp;
-    char* final = (char*)malloc(sizeof(char));
+    char* final = (char*)calloc(TXT,sizeof(char));
     if(final==NULL) exit(0);
     
     // get gematria value of word
@@ -121,7 +121,7 @@ char* Gematria(char* word, char* text)
     // find all substrings that has the same gematria value
     int tempSum=0;
     char* sameValue;
-    sameValue = (char*)(malloc(sizeof(text)));
+    sameValue = (char*)(calloc(sizeof(text),sizeof(char)));
     if(sameValue==NULL) exit(0);
     
     int j=0;
@@ -141,7 +141,9 @@ char* Gematria(char* word, char* text)
                 temp = temp-j+count;
         
             // reset pointer
-            sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+            sameValue -=count;
+            free(sameValue);
+            sameValue = (char*)(calloc(sizeof(text),sizeof(char)));
             if(sameValue==NULL) exit(0);
             tempSum=0;
             j=0;
@@ -157,7 +159,8 @@ char* Gematria(char* word, char* text)
         else
         {
             // reset pointer
-            sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+            free(sameValue);
+            sameValue = (char*)(calloc(sizeof(text),sizeof(char)));
             if(sameValue==NULL) exit(0);
             temp = temp-j;
             tempSum=0;
@@ -175,12 +178,7 @@ char* Gematria(char* word, char* text)
             count++;
         }
         final = strcat(final,strcat(sameValue,"~"));
-        temp = temp-j+count;
-        // reset pointer
-        sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
-        if(sameValue==NULL) exit(0);
-        tempSum=0;
-        j=0;
+        sameValue-=count;
     }
     free(sameValue);
     return final;
@@ -190,10 +188,10 @@ char* Atbash(char* word, char* text, int wordSize)
 {
     // initiazlie
     char* temp;
-    char* final = (char*)malloc(sizeof(char));
+    char* final = (char*)calloc(TXT,sizeof(char));
     if(final==NULL) exit(0);
     
-    // get atbash value of word
+    // get gematria value of word
     int wordSum = 0;
     for (temp = word; *temp!='\0'; temp++)
     {
@@ -203,7 +201,7 @@ char* Atbash(char* word, char* text, int wordSize)
     // find all substrings that has the same gematria value
     int tempSum=0;
     char* sameValue;
-    sameValue = (char*)(malloc(sizeof(text)));
+    sameValue = (char*)(calloc(sizeof(text),sizeof(char)));
     if(sameValue==NULL) exit(0);
     
     int j=0;
@@ -223,7 +221,9 @@ char* Atbash(char* word, char* text, int wordSize)
                 temp = temp-j+count;
         
             // reset pointer
-            sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+            sameValue -=count;
+            free(sameValue);
+            sameValue = (char*)(calloc(sizeof(text),sizeof(char)));
             if(sameValue==NULL) exit(0);
             tempSum=0;
             j=0;
@@ -239,7 +239,8 @@ char* Atbash(char* word, char* text, int wordSize)
         else
         {
             // reset pointer
-            sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
+            free(sameValue);
+            sameValue = (char*)(calloc(sizeof(text),sizeof(char)));
             if(sameValue==NULL) exit(0);
             temp = temp-j;
             tempSum=0;
@@ -257,18 +258,13 @@ char* Atbash(char* word, char* text, int wordSize)
             count++;
         }
         final = strcat(final,strcat(sameValue,"~"));
-        temp = temp-j+count;
-        // reset pointer
-        sameValue = (char*)(calloc(sizeof(sameValue),sizeof(char)));
-        if(sameValue==NULL) exit(0);
-        tempSum=0;
-        j=0;
+        sameValue-=count;
     }
     free(sameValue);
     
     // filter combinations that are not the word or its palindrome
     j=0;
-    char* ret = (char*)calloc(1,sizeof(char));
+    char* ret = (char*)calloc(sizeof(final),sizeof(char));
     temp = calloc(wordSize,sizeof(char));
     if(ret==NULL || temp==NULL) exit(0);
     for (char* arr = final; *arr!='\0'; arr++)
@@ -283,6 +279,7 @@ char* Atbash(char* word, char* text, int wordSize)
                 ret = strcat(ret,strcat(temp,"~"));
             }
             // no match - reset pointer
+            free(temp);
             temp = calloc(wordSize,sizeof(char));
             if(temp==NULL) exit(0);
             j=0;
@@ -306,7 +303,7 @@ char* Atbash(char* word, char* text, int wordSize)
 char* Anagram(char* word, char* text, int wordSize, int textSize, char* gem)
 {
     char* potential = gem;
-    char* final = (char*)calloc(1,sizeof(char));
+    char* final = (char*)calloc(textSize,sizeof(char));
     if(final==NULL) exit(0);
     int numOfWords = 0;
     // get number of potential anagrams
@@ -332,8 +329,9 @@ char* Anagram(char* word, char* text, int wordSize, int textSize, char* gem)
             final = strcat(final,strcat(other,"~"));
         }
         temp++;
+        free(other);
     }
-    //free(potential);
-    free(other);
+    // free(potential);
+    // free(other);
     return final;
 }

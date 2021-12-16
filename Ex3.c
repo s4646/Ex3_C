@@ -80,7 +80,7 @@ int main()
     printf("Atbash Sequences: %s\n", test2);
 
     *(test3+NumOfElements(test3)-1)='\0'; // remove last '~'
-    printf("Anagram Sequences: %s", test3);
+    printf("Anagram Sequences: %s\n", test3);
 
     free(word);
     free(text);
